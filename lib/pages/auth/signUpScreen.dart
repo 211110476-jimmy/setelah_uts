@@ -1,30 +1,45 @@
+// ignore_for_file: camel_case_types
+
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:validators/validators.dart';
-import 'signUpScreen.dart';
-import 'forgotPasswordScreen.dart';
-import '../mainPage.dart';
+import 'package:step_progress_indicator/step_progress_indicator.dart';
+import 'loginScreen.dart';
 
-class loginScreen extends StatefulWidget {
-  const loginScreen({Key? key}) : super(key: key);
+class signUpScreen extends StatefulWidget {
+  const signUpScreen({Key? key}) : super(key: key);
 
   @override
-  State<loginScreen> createState() => _loginScreenState();
+  State<signUpScreen> createState() => _signUpScreenState();
 }
 
-class _loginScreenState extends State<loginScreen> {
+class _signUpScreenState extends State<signUpScreen> {
   final TextEditingController _textEditingController = TextEditingController();
 
-  @override
-  void dispose() {
-    _textEditingController.clear();
-    super.dispose();
+    @override
+    void dispose() {
+      _textEditingController.clear();
+      super.dispose();
+    }
+
+    bool isEmailCorrect = false;
+    final _username = GlobalKey<FormState>();
+    final _email = GlobalKey<FormState>();
+    final _password = GlobalKey<FormState>();
+    bool _hidden = true;
+    
+    late String _pass;
+    double _strength = 0;
+    RegExp numReg = RegExp(r".*[0-9].*");
+    RegExp letterReg = RegExp(r".*[A-Za-z].*");
+    String _displayText = '';
+
+    void _toggle() {
+    setState(() {
+      _hidden = !_hidden;
+    });
   }
-
-  bool isEmailCorrect = false;
-  final _formKey = GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,8 +50,9 @@ class _loginScreenState extends State<loginScreen> {
           onPressed: () => Navigator.of(context).pop(),
         ), 
         centerTitle: true,
+
       ),
-      
+
       body: Container(
         decoration: const BoxDecoration(
             // color: Colors.red.withOpacity(0.1),
@@ -54,12 +70,11 @@ class _loginScreenState extends State<loginScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Lottie.network(
-                      // 'https://assets6.lottiefiles.com/private_files/lf30_ulp9xiqw.json', //shakeing lock
-                      'https://assets6.lottiefiles.com/packages/lf20_k9wsvzgd.json',
+                  Lottie.asset(
+                      'assets/images/signup.json',
                       animate: true,
-                      height: 120,
-                      width: 600),
+                      height: 150,
+                      width: 630),
                   // logo here
                   // Image.asset(
                   //   'assets/images/logo_new.png',
@@ -67,7 +82,7 @@ class _loginScreenState extends State<loginScreen> {
                   //   width: 120,
                   // ),
                   Text(
-                    'Log In Now',
+                    'Sign Up Now',
                     style: GoogleFonts.indieFlower(
                       textStyle: const TextStyle(
                         fontWeight: FontWeight.bold,
@@ -76,7 +91,7 @@ class _loginScreenState extends State<loginScreen> {
                     ),
                   ),
                   Text(
-                    'Please login to continue using our app',
+                    'Please sign up to use our app',
                     style: GoogleFonts.indieFlower(
                       textStyle: TextStyle(
                           color: Colors.black.withOpacity(0.5),
@@ -85,12 +100,12 @@ class _loginScreenState extends State<loginScreen> {
                           fontSize: 15),
                     ),
                   ),
-
                   const SizedBox(
                     height: 30,
                   ),
+
+                  //username
                   Container(
-                    height: isEmailCorrect? 280 : 200,
                     width: MediaQuery.of(context).size.width / 1.1,
                     decoration: BoxDecoration(
                         color: Colors.white.withOpacity(0.3),
@@ -98,8 +113,44 @@ class _loginScreenState extends State<loginScreen> {
                     child: Column(
                       children: [
                         Padding(
+                          padding: const EdgeInsets.only(left: 20, right: 20),
+                          child: Form(
+                            key: _username,
+                            child: TextFormField(
+                              decoration: const InputDecoration(
+                                focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide.none,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10))),
+                                enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide.none,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10))),
+                                prefixIcon: Icon(
+                                  Icons.person,
+                                  color: Colors.purple,
+                                ),
+                                filled: true,
+                                fillColor: Colors.white,
+                                labelText: "Username",
+                                hintText: 'testing123',
+                                labelStyle: TextStyle(color: Colors.purple),
+                              ),
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'Enter a username';
+                                }
+                              },
+                            ),
+                          ),
+                        ),
+
+                        //email
+                        Padding(
                           padding: const EdgeInsets.only(
                               left: 20, right: 20, bottom: 20, top: 20),
+                          child: Form(
+                            key: _email,
                           child: TextFormField(
                             controller: _textEditingController,
                             onChanged: (val) {
@@ -130,36 +181,82 @@ class _loginScreenState extends State<loginScreen> {
                               //     icon: Icon(Icons.close,
                               //         color: Colors.purple))
                             ),
+                            validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'Enter email!';
+                                }
+                                else if(!isEmailCorrect) {
+                                  return 'Enter valid email';
+                                }
+                              },
                           ),
                         ),
+                      ),
+
+                        //Password
                         Padding(
                           padding: const EdgeInsets.only(left: 20, right: 20),
                           child: Form(
-                            key: _formKey,
+                            key: _password,
                             child: TextFormField(
                               obscuringCharacter: '*',
-                              obscureText: true,
-                              decoration: const InputDecoration(
-                                focusedBorder: UnderlineInputBorder(
+                              obscureText: _hidden,
+                              decoration: InputDecoration(
+                                focusedBorder: const UnderlineInputBorder(
                                     borderSide: BorderSide.none,
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(10))),
-                                enabledBorder: UnderlineInputBorder(
+                                enabledBorder: const UnderlineInputBorder(
                                     borderSide: BorderSide.none,
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(10))),
-                                prefixIcon: Icon(
+                                prefixIcon: const Icon(
                                   Icons.person,
                                   color: Colors.purple,
                                 ),
+                                suffixIcon: IconButton(icon: Icon(_hidden ? Icons.visibility : Icons.visibility_off),
+                                onPressed: () => _toggle()),
                                 filled: true,
                                 fillColor: Colors.white,
                                 labelText: "Password",
                                 hintText: '*********',
-                                labelStyle: TextStyle(color: Colors.purple),
+                                labelStyle: const TextStyle(color: Colors.purple),
                               ),
+                              onChanged:(value) => {
+                              if (value.isEmpty) {
+                              setState(() {
+                                _strength = 0;
+                              })
+                            } else if (value.length < 6) {
+                              setState(() {
+                                _strength = 1 / 4;
+                                _displayText = 'Your password is too short';
+                              })
+                            } else if (value.length < 8) {
+                              setState(() {
+                                _strength = 2 / 4;
+                                _displayText = 'Your password is acceptable but not strong';
+                              })
+                            } else {
+                              if (!letterReg.hasMatch(value) || !numReg.hasMatch(value)) {
+                                setState(() {
+                                  // Password length >= 8
+                                  // But doesn't contain both letter and digit characters
+                                  _strength = 3 / 4;
+                                  _displayText = 'Your password is strong';
+                                })
+                              } else {
+                                // Password length >= 8
+                                // Password contains both letter and digit characters
+                                setState(() {
+                                  _strength = 1;
+                                  _displayText = 'Your password is great';
+                                })
+                                }}
+                              },
                               validator: (value) {
-                                if (value!.isEmpty && value.length < 5) {
+                                if (value!.isEmpty) {
+                                  _strength = 1/4;
                                   return 'Enter a valid password';
                                 }
                               },
@@ -169,33 +266,51 @@ class _loginScreenState extends State<loginScreen> {
                         const SizedBox(
                           height: 20,
                         ),
-                        isEmailCorrect
-                            ? ElevatedButton(
+                        LinearProgressIndicator(
+                        value: _strength,
+                        backgroundColor: Colors.grey[300],
+                        color: _strength <= 1 / 4
+                            ? Colors.red
+                            : _strength == 2 / 4
+                            ? Colors.yellow
+                            : _strength == 3 / 4
+                            ? Colors.blue
+                            : Colors.green,
+                        minHeight: 15,
+                      ),
+                      Text(
+                        _displayText,
+                        style: const TextStyle(fontSize: 18),
+                      ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        ElevatedButton(
                                 style: ElevatedButton.styleFrom(
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
                                             BorderRadius.circular(10.0)),
-                                    backgroundColor: isEmailCorrect == false
-                                        ? Colors.red
-                                        : Colors.purple,
+                                    // backgroundColor: isEmailCorrect == false
+                                    //     ? Colors.red
+                                    //     : Colors.purple,
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 131, vertical: 20)
                                     // padding: EdgeInsets.only(
                                     //     left: 120, right: 120, top: 20, bottom: 20),
                                     ),
                                 onPressed: () {
-                                  if (_formKey.currentState!.validate()) {
+                                  if (_username.currentState!.validate() && _email.currentState!.validate() && _password.currentState!.validate() && isEmailCorrect) {
                                     // If the form is valid, display a snackbar. In the real world,
                                     // you'd often call a server or save the information in a database.
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       const SnackBar(
-                                          content: Text('Processing Data')),
+                                          content: Text('Register Success!')),
                                     );
-                                  Navigator.pushReplacement(
+                                  Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (BuildContext context) =>
-                                          const MainPage()));
+                                          const loginScreen()));
                                   }
                                   // Navigator.push(
                                   //     context,
@@ -203,10 +318,10 @@ class _loginScreenState extends State<loginScreen> {
                                   //         builder: (context) => loginScreen()));
                                 },
                                 child: const Text(
-                                  'Log In',
+                                  'Register',
                                   style: TextStyle(fontSize: 17),
                                 ))
-                            : Container(),
+                            , Container(),
                       ],
                     ),
                   ),
@@ -240,7 +355,7 @@ class _loginScreenState extends State<loginScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'You have\'t any account?',
+                        'Already have an account?',
                         style: TextStyle(
                           color: Colors.black.withOpacity(0.6),
                         ),
@@ -251,32 +366,16 @@ class _loginScreenState extends State<loginScreen> {
                           context,
                           MaterialPageRoute(
                               builder: (BuildContext context) =>
-                                  const signUpScreen()));
+                                  const loginScreen()));
                         },
                         child: const Text(
-                          'Sign Up',
+                          'Log In',
                           
                           style: TextStyle(
                               color: Colors.purple,
                               fontWeight: FontWeight.w500),
                         ),
                       ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (BuildContext context) =>
-                                  const forgotPasswordScreen()));
-                        },
-                        child: const Text(
-                          'Forgot Password',
-                          
-                          style: TextStyle(
-                              color: Colors.purple,
-                              fontWeight: FontWeight.w500),
-                        ),
-                      )
                     ],
                   ),
                 ],
