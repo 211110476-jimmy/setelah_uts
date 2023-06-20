@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:projek_app/pages/mainPage.dart';
 
 // ignore: camel_case_types
 class welcomeScreen extends StatefulWidget {
@@ -55,7 +56,12 @@ class _welcomeScreenState extends State<welcomeScreen> {
                         padding: EdgeInsets.symmetric(
                             horizontal: MediaQuery.of(context).size.width / 3.3,
                             vertical: 20)),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const MainPage()));
+                    },
                     child: const Text(
                       'Start Using Marifood!',
                       style: TextStyle(fontSize: 17),
