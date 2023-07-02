@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'promoPage.dart';
+import 'homePage.dart';
 import 'package:provider/provider.dart';
 
 class PageIndex extends ChangeNotifier {
@@ -24,7 +26,10 @@ class MainPage extends StatelessWidget {
         body: Consumer<PageIndex>(
           builder: (context, pageIndex, _) => IndexedStack(
             index: pageIndex.index,
-            children: <Widget>[],
+            children: <Widget>[
+              const HomePage(),
+              const PromoPage(),
+            ],
           ),
         ),
         bottomNavigationBar: Consumer<PageIndex>(
