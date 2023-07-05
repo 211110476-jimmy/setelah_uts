@@ -56,8 +56,7 @@ class _HomePageState extends State<HomePage> {
       name: 'Poco C40',
       description: 'HP terbaru dengan spek gahar',
       price: "1.499.000",
-      imagePath:
-          'https://m.media-amazon.com/images/I/411aDEiwXqL.jpg',
+      imagePath: 'https://m.media-amazon.com/images/I/411aDEiwXqL.jpg',
     ),
     FoodItem(
       id: 2,

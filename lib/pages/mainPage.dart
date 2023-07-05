@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'promoPage.dart';
+import 'package:projek_app/pages/promoPage.dart';
 import 'homePage.dart';
+import 'myOrdersPage.dart';
 import 'package:provider/provider.dart';
 
 class PageIndex extends ChangeNotifier {
@@ -29,6 +30,7 @@ class MainPage extends StatelessWidget {
             children: <Widget>[
               const HomePage(),
               const PromoPage(),
+              MyOrdersPage(),
             ],
           ),
         ),
