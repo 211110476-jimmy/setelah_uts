@@ -24,4 +24,46 @@ class OtherApps extends StatelessWidget {
       ),
     );
   }
+
+  Widget _buildAppCard(
+      String appName, String description, Color color, IconData icon) {
+    return Card(
+      elevation: 4.0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8.0),
+      ),
+      child: InkWell(
+        onTap: () {
+          // Navigate to the app details page
+        },
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Icon(
+              icon,
+              size: 64.0,
+              color: color,
+            ),
+            SizedBox(height: 16.0),
+            Text(
+              appName,
+              style: TextStyle(
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 8.0),
+            Text(
+              description,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 14.0,
+                color: Colors.grey[600],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
