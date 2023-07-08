@@ -4,6 +4,9 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:projek_app/pages/otherApps.dart';
 import 'package:projek_app/pages/settingsPage.dart';
 import 'auth/loginScreen.dart';
+import 'cartPage.dart';
+import 'cart.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -78,6 +81,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final cartProvider = Provider.of<CartProvider>(context);
+    final cartItems = cartProvider.cartItems;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -97,7 +102,57 @@ class _HomePageState extends State<HomePage> {
             );
           },
         ),
-        actions: const [
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                PageRouteBuilder(
+                  transitionDuration: const Duration(milliseconds: 500),
+                  pageBuilder: (context, animation, secondaryAnimation) {
+                    final tween = Tween<Offset>(
+                      begin: const Offset(1, 0),
+                      end: Offset.zero,
+                    ).chain(CurveTween(curve: Curves.ease));
+
+                    return SlideTransition(
+                      position: animation.drive(tween),
+                      child: ShoppingCartPage(),
+                    );
+                  },
+                ),
+              );
+            },
+            icon: Stack(
+              children: [
+                const Icon(
+                  Icons.shopping_cart,
+                  color: Colors.black,
+                ),
+                if (cartItems.isNotEmpty)
+                  Positioned(
+                    right: 0,
+                    child: Container(
+                      padding: const EdgeInsets.all(2),
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Text(
+                        '${cartItems.length}',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+          ),
+          SizedBox(
+            width: 15,
+          ),
           Icon(
             Icons.notifications_none,
             color: Colors.black,
@@ -286,7 +341,41 @@ class _HomePageState extends State<HomePage> {
                           height: 40,
                           width: 115,
                           child: ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              final cartProvider = Provider.of<CartProvider>(
+                                  context,
+                                  listen: false);
+                              final itemIndex = cartProvider.cartItems
+                                  .indexWhere((item) => item.id == foodItem.id);
+                              if (itemIndex != -1) {
+                                // Item already exists in the cart, update the quantity
+                                cartProvider.cartItems[itemIndex].quantity++;
+                              } else {
+                                // Item does not exist in the cart, add it
+                                cartProvider.addToCart(
+                                  Cart(
+                                    id: foodItem.id,
+                                    name: foodItem.name,
+                                    description: foodItem.description,
+                                    price: foodItem.price,
+                                    imagePath: foodItem.imagePath,
+                                  ),
+                                );
+                              }
+                              // Show a SnackBar with custom style
+                              // Show a SnackBar with custom duration and behavior
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: const Text('Item added to cart!',
+                                      style: TextStyle(color: Colors.white)),
+                                  backgroundColor: Colors.orange,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  duration: const Duration(milliseconds: 700),
+                                ),
+                              );
+                            },
                             child: const Text('Order Now'),
                             style: ElevatedButton.styleFrom(
                               primary: Colors.pink,
