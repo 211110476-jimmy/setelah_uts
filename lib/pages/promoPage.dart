@@ -16,26 +16,22 @@ class _PromoPageState extends State<PromoPage> {
 
   List<Restaurant> _restaurants = [
     Restaurant(
-        image:
-            'https://images.glints.com/unsafe/glints-dashboard.s3.amazonaws.com/company-logo/329c13954e7878b466ce904b65894314.jpg',
+        image: 'assets/images/realfood.webp',
         name: 'Realfood Official, Jakarta Barat',
         distance: 1200,
         rating: 4.7),
     Restaurant(
-        image:
-            'https://logos-download.com/wp-content/uploads/2016/06/Fonterra_logo_logotype_2.png',
+        image: 'assets/images/fonterra.png',
         name: 'Fonterra, Tangerang',
         distance: 947,
         rating: 4.5),
     Restaurant(
-        image:
-            'https://1000logos.net/wp-content/uploads/2020/07/Oreo-Logo.png',
+        image: 'assets/images/oreo.png',
         name: 'Oreo, Deli Serdang',
         distance: 17,
         rating: 4.2),
     Restaurant(
-        image:
-            'https://logos-world.net/wp-content/uploads/2022/01/Unilever-Logo.png',
+        image: 'assets/images/unilever.png',
         name: 'Unilever Indonesia, Medan',
         distance: 5,
         rating: 4.4),

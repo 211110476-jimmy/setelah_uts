@@ -33,21 +33,9 @@ class FoodItem {
 
 class _HomePageState extends State<HomePage> {
   List imageList = [
-    {
-      'id': 1,
-      'path':
-          'https://bankmega.com/media/filer_public/02/48/0248e6c1-b3f3-454f-a4b1-93debf3b1b6b/0-banner-bm-mbm-take-away-nasional2.jpg'
-    },
-    {
-      'id': 2,
-      'path':
-          'https://i.pinimg.com/736x/35/ed/d2/35edd2351280dff6a3fb0ce19c026fb0.jpg'
-    },
-    {
-      'id': 3,
-      'path':
-          'https://marketplace.canva.com/EAFNTrS51A8/1/0/1600w/canva-orange-creative-delicious-food-menu-banner-VFdVvBTTwbQ.jpg'
-    },
+    {'id': 1, 'path': 'assets/images/carousel1.jpg'},
+    {'id': 2, 'path': 'assets/images/carousel2.jpg'},
+    {'id': 3, 'path': 'assets/images/carousel3.webp'},
   ];
 
   final CarouselController carouselController = CarouselController();
@@ -59,23 +47,21 @@ class _HomePageState extends State<HomePage> {
       name: 'Poco C40',
       description: 'HP terbaru dengan spek gahar',
       price: "1.499.000",
-      imagePath: 'https://m.media-amazon.com/images/I/411aDEiwXqL.jpg',
+      imagePath: 'assets/images/pocoC40.jpg',
     ),
     FoodItem(
       id: 2,
       name: 'Bango 735 mL',
       description: 'Kecap manis bango dengan biji berkualitas',
       price: "30.000",
-      imagePath:
-          'https://cf.shopee.co.id/file/id-11134201-23030-3tl6fe38hlov46',
+      imagePath: 'assets/images/bango.jpg',
     ),
     FoodItem(
       id: 3,
       name: 'Poco F5',
       description: 'HP terbaru dengan spek gahar',
       price: "5.175.000",
-      imagePath:
-          'https://awsimages.detik.net.id/community/media/visual/2023/05/10/poco-f5-dan-f5-pro-1.jpeg?w=883',
+      imagePath: 'assets/images/pocoF5.jpeg',
     ),
   ];
 
