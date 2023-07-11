@@ -393,7 +393,7 @@ class _HomePageState extends State<HomePage> {
                             style: ElevatedButton.styleFrom(
                               primary: Colors.pink,
                               onPrimary: Colors.white,
-                              padding: const EdgeInsets.all(17),
+                              padding: const EdgeInsets.all(1),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),
