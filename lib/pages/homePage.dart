@@ -7,6 +7,7 @@ import 'auth/loginScreen.dart';
 import 'cartPage.dart';
 import 'cart.dart';
 import 'package:provider/provider.dart';
+import 'notificationPage.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -139,9 +140,34 @@ class _HomePageState extends State<HomePage> {
           SizedBox(
             width: 15,
           ),
-          Icon(
-            Icons.notifications_none,
-            color: Colors.black,
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                PageRouteBuilder(
+                  transitionDuration: const Duration(milliseconds: 500),
+                  pageBuilder: (context, animation, secondaryAnimation) {
+                    final tween = Tween<Offset>(
+                      begin: const Offset(1, 0),
+                      end: Offset.zero,
+                    ).chain(CurveTween(curve: Curves.ease));
+
+                    return SlideTransition(
+                      position: animation.drive(tween),
+                      child: NotificationPage(),
+                    );
+                  },
+                ),
+              );
+            },
+            icon: Stack(
+              children: [
+                const Icon(
+                  Icons.notifications_none,
+                  color: Colors.black,
+                ),
+              ],
+            ),
           ),
           SizedBox(
             width: 15,
