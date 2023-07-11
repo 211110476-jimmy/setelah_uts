@@ -34,7 +34,7 @@ class _welcomeScreenState extends State<welcomeScreen> {
                 ),
                 const SizedBox(height: 20),
                 Text(
-                  'Enjoy the app :)',
+                  'Happy Shopping :)',
                   style: TextStyle(
                     color: Colors.black.withOpacity(0.5),
                     fontWeight: FontWeight.w300,
@@ -63,7 +63,7 @@ class _welcomeScreenState extends State<welcomeScreen> {
                       );
                     },
                     child: const Text(
-                      'Start Using Marifood!',
+                      'Start Shopping!',
                       style: TextStyle(fontSize: 17),
                     ),
                   ),
