@@ -41,9 +41,8 @@ class _loginScreenState extends State<loginScreen> {
         decoration: const BoxDecoration(
             // color: Colors.red.withOpacity(0.1),
             image: DecorationImage(
-                image: NetworkImage(
-                    // 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShp2T_UoR8vXNZXfMhtxXPFvmDWmkUbVv3A40TYjcunag0pHFS_NMblOClDVvKLox4Atw&usqp=CAU',
-                    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSx7IBkCtYd6ulSfLfDL-aSF3rv6UfmWYxbSE823q36sPiQNVFFLatTFdGeUSnmJ4tUzlo&usqp=CAU'),
+                image: AssetImage(
+                    'assets/images/login-background.jpg'),
                 fit: BoxFit.cover,
                 opacity: 0.3)),
         child: SafeArea(
@@ -54,9 +53,8 @@ class _loginScreenState extends State<loginScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Lottie.network(
-                      // 'https://assets6.lottiefiles.com/private_files/lf30_ulp9xiqw.json', //shakeing lock
-                      'https://assets6.lottiefiles.com/packages/lf20_k9wsvzgd.json',
+                  Lottie.asset(
+                      'assets/images/shaking-lock.json',
                       animate: true,
                       height: 120,
                       width: 600),
@@ -240,7 +238,7 @@ class _loginScreenState extends State<loginScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'You have\'t any account?',
+                        'You don\'t have an account?',
                         style: TextStyle(
                           color: Colors.black.withOpacity(0.6),
                         ),

@@ -41,9 +41,8 @@ class _forgotPasswordScreen extends State<forgotPasswordScreen> {
         decoration: const BoxDecoration(
             // color: Colors.red.withOpacity(0.1),
             image: DecorationImage(
-                image: NetworkImage(
-                    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShp2T_UoR8vXNZXfMhtxXPFvmDWmkUbVv3A40TYjcunag0pHFS_NMblOClDVvKLox4Atw&usqp=CAU'),
-                // 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSx7IBkCtYd6ulSfLfDL-aSF3rv6UfmWYxbSE823q36sPiQNVFFLatTFdGeUSnmJ4tUzlo&usqp=CAU'),
+                image: AssetImage(
+                    'assets/images/login-background.jpg'),
                 fit: BoxFit.cover,
                 opacity: 0.3)),
         child: SafeArea(
