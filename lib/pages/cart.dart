@@ -18,6 +18,7 @@ class Cart {
     this.quantity = 1,
   });
 }
+
 class CartProvider extends ChangeNotifier {
   List<Cart> cartItems = [];
 
@@ -28,6 +29,11 @@ class CartProvider extends ChangeNotifier {
 
   void removeFromCart(Cart item) {
     cartItems.remove(item);
+    notifyListeners();
+  }
+
+  void clearCart() {
+    cartItems.clear();
     notifyListeners();
   }
 }
