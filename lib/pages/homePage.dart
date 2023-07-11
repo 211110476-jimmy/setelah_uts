@@ -72,6 +72,7 @@ class _HomePageState extends State<HomePage> {
     final cartItems = cartProvider.cartItems;
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         centerTitle: true,
         backgroundColor: Colors.white,
         elevation: 0,

@@ -306,7 +306,7 @@ class _signUpScreenState extends State<signUpScreen> {
                                       const SnackBar(
                                           content: Text('Register Success!')),
                                     );
-                                  Navigator.push(
+                                  Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
                                       builder: (BuildContext context) =>

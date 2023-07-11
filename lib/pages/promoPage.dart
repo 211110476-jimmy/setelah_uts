@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'notificationPage.dart';
 
 class PromoPage extends StatefulWidget {
   const PromoPage({super.key});
@@ -51,12 +52,38 @@ class _PromoPageState extends State<PromoPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
         elevation: 0,
         actions: [
           IconButton(
-            icon: const Icon(Icons.notifications_none, color: Colors.black),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                PageRouteBuilder(
+                  transitionDuration: const Duration(milliseconds: 500),
+                  pageBuilder: (context, animation, secondaryAnimation) {
+                    final tween = Tween<Offset>(
+                      begin: const Offset(1, 0),
+                      end: Offset.zero,
+                    ).chain(CurveTween(curve: Curves.ease));
+
+                    return SlideTransition(
+                      position: animation.drive(tween),
+                      child: NotificationPage(),
+                    );
+                  },
+                ),
+              );
+            },
+            icon: Stack(
+              children: [
+                const Icon(
+                  Icons.notifications_none,
+                  color: Colors.black,
+                ),
+              ],
+            ),
           ),
           const SizedBox(width: 10),
         ],

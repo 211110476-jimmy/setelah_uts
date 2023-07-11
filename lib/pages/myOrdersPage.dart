@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'notificationPage.dart';
 class MyOrdersPage extends StatefulWidget {
   @override
   _MyOrdersPageState createState() => _MyOrdersPageState();
@@ -45,12 +45,38 @@ class _MyOrdersPageState extends State<MyOrdersPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
         elevation: 0,
         actions: [
           IconButton(
-            icon: const Icon(Icons.notifications_none, color: Colors.black),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                PageRouteBuilder(
+                  transitionDuration: const Duration(milliseconds: 500),
+                  pageBuilder: (context, animation, secondaryAnimation) {
+                    final tween = Tween<Offset>(
+                      begin: const Offset(1, 0),
+                      end: Offset.zero,
+                    ).chain(CurveTween(curve: Curves.ease));
+
+                    return SlideTransition(
+                      position: animation.drive(tween),
+                      child: NotificationPage(),
+                    );
+                  },
+                ),
+              );
+            },
+            icon: Stack(
+              children: [
+                const Icon(
+                  Icons.notifications_none,
+                  color: Colors.black,
+                ),
+              ],
+            ),
           ),
           const SizedBox(width: 10),
         ],
