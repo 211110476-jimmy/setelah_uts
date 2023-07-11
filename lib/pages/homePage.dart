@@ -225,7 +225,7 @@ class _HomePageState extends State<HomePage> {
                 itemCount: imageList.length,
                 itemBuilder: (BuildContext context, int index, int realIndex) {
                   return Container(
-                    child: Image.network(
+                    child: Image.asset(
                       imageList[index]['path'],
                       fit: BoxFit.cover,
                       width: double.infinity,
@@ -282,7 +282,7 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         Expanded(
                           flex: 3,
-                          child: Image.network(
+                          child: Image.asset(
                             foodItem.imagePath,
                             height: 150,
                             fit: BoxFit.cover,

@@ -201,7 +201,7 @@ class RestaurantCard extends StatelessWidget {
     return Card(
       child: Row(
         children: [
-          Image.network(
+          Image.asset(
             restaurant.image,
             width: 100.0,
             height: 100.0,
